@@ -1,7 +1,7 @@
-name: gitleaks
+name: continous intergration
 on: [pull_request, push, workflow_dispatch]
 jobs:
-  scan:
+  Gitleaks:
     name: gitleaks
     runs-on: ubuntu-latest
     steps:
@@ -11,3 +11,18 @@ jobs:
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  trivy-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy FS Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scan-ref: .
+
+  
