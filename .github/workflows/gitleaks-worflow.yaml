@@ -26,4 +26,26 @@ jobs:
           scan-type: fs
           scan-ref: .
 
+
+
+  OWASP dependency-check:
+    name: OWASP Dependency-check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: "Devsecops-Complete"
+          path: "."
+          format: "HTML"
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: dependency-check-report
+          path: reports
   
